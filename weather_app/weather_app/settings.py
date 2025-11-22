@@ -37,7 +37,7 @@ DEBUG = False
 
 
 ### CHANGE THIS <----------------------------------------------------------------------------------------
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -116,14 +116,7 @@ USE_X_FORWARDED_PORT = True
 
 
 ### CHANGE THIS <===============================================================================================
-CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1',
-    'https://127.0.0.1',
-    'http://localhost',
-    'https://localhost',
-    'http://webapp.local',
-    'https://webapp.local',
-]
+CSRF_TRUSTED_ORIGINS = []
 # And add these
 #CSRF_COOKIE_SECURE = True
 #SESSION_COOKIE_SECURE = True
@@ -131,6 +124,18 @@ CSRF_TRUSTED_ORIGINS = [
 #SECURE_HSTS_SECONDS = 31536000 # 1 year
 #SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 #SECURE_HSTS_PRELOAD = True
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
+    ALLOWED_HOSTS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontendv1/browser'),
+]
+
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -177,7 +182,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+#STATIC_URL = 'static/'
 STATIC_ROOT = '../static/'
 
 # Default primary key field type
