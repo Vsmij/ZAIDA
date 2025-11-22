@@ -14,8 +14,14 @@ from .models import Series, Measurement
 #from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+#for render
+from django.shortcuts import render
 
 User = get_user_model()
+
+#render
+def index_frontend(request):
+    return render(request, 'index.html')
 
 # === REJESTRACJA ===
 @api_view(['POST'])
